@@ -12,6 +12,7 @@ import { auth } from '../firebase';
 import { useNavigate } from 'react-router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Link } from 'react-router';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
 
 export function Register() {
 	const [email, setEmail] = useState('');
@@ -24,7 +25,21 @@ export function Register() {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			await createUserWithEmailAndPassword(auth, email, password);
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+
+			// Save user data to Firestore
+			const db = getFirestore();
+			await setDoc(doc(db, 'users', userCredential.user.uid), {
+				email: userCredential.user.email,
+				displayName: userCredential.user.displayName,
+				photoURL: userCredential.user.photoURL,
+				createdAt: new Date().toISOString(),
+			});
+
 			navigate('/dashboard');
 		} catch (err) {
 			setError(
