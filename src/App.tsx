@@ -1,13 +1,17 @@
 import '@mantine/core/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import { Register } from './screens/Register';
+import { Route, Routes } from 'react-router';
+import { Login } from './screens/Login';
 
 function App() {
 	return (
 		<MantineProvider>
-			<div className='flex flex-col items-center justify-center h-screen'>
-				<h1 className='text-4xl font-bold'>Dashboard</h1>
-			</div>
+			<Routes>
+				<Route path='/register' element={<Register />} />
+				<Route path='/login' element={<Login />} />
+			</Routes>
 		</MantineProvider>
 	);
 }
