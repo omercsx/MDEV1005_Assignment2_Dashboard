@@ -40,7 +40,7 @@ export function Register() {
 				createdAt: new Date().toISOString(),
 			});
 
-			navigate('/dashboard');
+			navigate('/');
 		} catch (err) {
 			setError(
 				err instanceof Error ? err.message : 'An unknown error occurred'

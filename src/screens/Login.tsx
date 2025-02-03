@@ -23,7 +23,7 @@ export function Login() {
 		e.preventDefault();
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
-			navigate('/dashboard');
+			navigate('/');
 		} catch (err) {
 			setError(
 				err instanceof Error
