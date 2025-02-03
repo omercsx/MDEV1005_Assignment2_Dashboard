@@ -6,8 +6,12 @@ import { Navigate, Route, Routes } from 'react-router';
 import { Login } from './screens/Login';
 import { UserProvider } from './components/UserProvider';
 import { ProtectedRoute } from './screens/ProtectedRoute';
-import { Dashboard } from './screens/Dashboard';
 import { useUser } from './contexts/UserContext';
+import { AppLayout } from './components/AppLayout';
+import { ProfilePage } from './screens/ProfilePage';
+import { WeatherPage } from './screens/WeatherPage';
+import { DogPage } from './screens/DogPage';
+import { JokesPage } from './screens/JokesPage';
 
 function RootRedirect() {
 	const { user, loading } = useUser();
@@ -16,7 +20,7 @@ function RootRedirect() {
 		return <Loader />;
 	}
 
-	return <Navigate to={user ? '/dashboard' : '/login'} replace />;
+	return <Navigate to={user ? '/profile' : '/login'} replace />;
 }
 
 function App() {
@@ -28,13 +32,18 @@ function App() {
 					<Route path='/register' element={<Register />} />
 					<Route path='/login' element={<Login />} />
 					<Route
-						path='/dashboard'
+						path='/'
 						element={
 							<ProtectedRoute>
-								<Dashboard />
+								<AppLayout />
 							</ProtectedRoute>
 						}
-					/>
+					>
+						<Route path='/profile' element={<ProfilePage />} />
+						<Route path='/weather' element={<WeatherPage />} />
+						<Route path='/dog' element={<DogPage />} />
+						<Route path='/jokes' element={<JokesPage />} />
+					</Route>
 				</Routes>
 			</UserProvider>
 		</MantineProvider>
